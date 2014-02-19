@@ -5,7 +5,7 @@
 #exact methid had to be modified
 
 include 'index.php';
-require "userpass.php";
+require "database_info.php";
 
 if (isset($_POST['searching']) && isset($_POST['find']) && isset($_POST['field'])) {
    
@@ -24,15 +24,15 @@ if (isset($_POST['searching']) && isset($_POST['find']) && isset($_POST['field']
             echo 'Please select what to search by';
             exit();
         }
-        mysql_connect("localhost", "root", "root") or
+        mysql_connect(HOST, USERNAME, PASSWORD) or
                 die(mysql_error());
-        mysql_select_db(DB_NAME) or die(mysql_error());
+        mysql_select_db(DATABASE_NAME) or die(mysql_error());
         
         $find = strtoupper($find);
         $find = strip_tags($find);
         $find = trim($find);
         
-        $data = mysql_query("SELECT * FROM bookslice1 WHERE $field LIKE'%$find%'");
+        $data = mysql_query("SELECT * FROM `" . TABLE_NAME . "` WHERE $field LIKE'%$find%'");
         
         while ($result = mysql_fetch_array($data)){
             echo 'Index number: '.$result['index'];
